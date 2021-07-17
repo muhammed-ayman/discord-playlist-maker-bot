@@ -1,11 +1,14 @@
 import os
 import discord
-from dotenv import load_dotenv
-import utils
+from Utils import *
 
-load_dotenv()
+# LOAD ENV VARIABLES
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+# INITIATE THE UTILS CLASS
+utils = Utils()
+
+# DISCORD CLIENT
 client = discord.Client()
 
 @client.event
@@ -14,6 +17,6 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
-    utils.search(msg.content)
+    utils.pattern_search(msg.content)
 
 client.run(TOKEN)
