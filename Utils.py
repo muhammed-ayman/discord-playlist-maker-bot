@@ -12,14 +12,15 @@ class Utils:
             '^\$list\s[a-zA-Z0-9_.\- ]+$': 'list_playlist_data'
         }
         self.db_conn = db_conn
+        self.to_send_msgs = []
     # FECTH ALL SONGS IN A GIVEN PLAYLIST
     def list_playlist_data(self, msg):
         playlist = msg.split(' ',1)[-1]
-        print(self.db_conn.list_playlist(playlist))
+        self.to_send_msgs = self.db_conn.list_playlist(playlist)
     # FETCH PLAYLISTS
     def list_playlists(self, msg):
         playlists_data = self.db_conn.list_playlists()
-        print(playlists_data)
+        self.to_send_msgs = playlists_data
     # FILTER PLAYLIST NAME AND PASS IT TO DB MODEL
     def create_playlist(self, msg):
         playlist_name = msg.split(' ',1)[1]

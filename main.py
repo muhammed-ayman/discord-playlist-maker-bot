@@ -17,6 +17,10 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
-    utils.pattern_search(msg.content)
+    if msg.author != client.user:
+        utils.pattern_search(msg.content)
+        if len(utils.to_send_msgs) > 0:
+            await msg.channel.send(utils.to_send_msgs)
+            utils.to_send_msgs = []
 
 client.run(TOKEN)
