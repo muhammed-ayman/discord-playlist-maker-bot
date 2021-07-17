@@ -30,11 +30,11 @@ class Database:
         self.cursor.execute(sql_query)
         self.connection.commit()
     # INSERT A SONG IN THE GIVEN PLAYLIST IF EXISTS OR CREATE IT AND INSERT AFTERWARDS
-    def insert_song(self, song, playlist):
+    def insert_song(self, song, playlist, link):
         if not self.check_playlist(playlist):
             self.insert_playlist(playlist)
         sql_query = f"""
-            INSERT INTO songs (song,playlist) VALUES ('{song}','{playlist}')
+            INSERT INTO songs (song,playlist,link) VALUES ('{song}','{playlist}','{link}')
         """
         self.cursor.execute(sql_query)
         self.connection.commit()
