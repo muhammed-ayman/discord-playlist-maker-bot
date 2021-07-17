@@ -7,9 +7,19 @@ class Utils:
             '^\$create\s[a-zA-Z0-9_.\- ]+$': 'create_playlist',
             '^\$add\s-p\s[a-zA-Z0-9_.\- ]+\s-s\s[a-zA-Z0-9_.\- ]+\s-l\s((http|https)://)'
                 '?(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}'
-                '\\b([-a-zA-Z0-9@:%._\\+~#?&//=])*': 'add_song'
+                '\\b([-a-zA-Z0-9@:%._\\+~#?&//=])*': 'add_song',
+            '^\$list$': 'list_playlists',
+            '^\$list\s[a-zA-Z0-9_.\- ]+$': 'list_playlist_data'
         }
         self.db_conn = db_conn
+    # FECTH ALL SONGS IN A GIVEN PLAYLIST
+    def list_playlist_data(self, msg):
+        playlist = msg.split(' ',1)[-1]
+        print(self.db_conn.list_playlist(playlist))
+    # FETCH PLAYLISTS
+    def list_playlists(self, msg):
+        playlists_data = self.db_conn.list_playlists()
+        print(playlists_data)
     # FILTER PLAYLIST NAME AND PASS IT TO DB MODEL
     def create_playlist(self, msg):
         playlist_name = msg.split(' ',1)[1]
