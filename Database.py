@@ -12,7 +12,7 @@ class Database:
             database = os.getenv('DB_NAME')
         )
         self.cursor = self.connection.cursor()
-    # CHECK IF PLAYLIST EXISTS ::
+    # CHECK IF PLAYLIST EXISTS
     def check_playlist(self, playlist_name):
         sql_query = f"""
             SELECT * FROM playlists WHERE playlist = '{playlist_name}'
@@ -25,6 +25,15 @@ class Database:
     # CREATE PLAYLIST WITH {playlist} NAME
     def insert_playlist(self,playlist):
         sql_query = f"INSERT INTO playlists (playlist) VALUES ('{playlist}')"
+        self.cursor.execute(sql_query)
+        self.connection.commit()
+    # INSERT A SONG IN THE GIVEN PLAYLIST IF EXISTS OR CREATE IT AND INSERT AFTERWARDS
+    def insert_song(self, song, playlist):
+        if not self.check_playlist(playlist):
+            self.insert_playlist(playlist)
+        sql_query = f"""
+            INSERT INTO songs (song,playlist) VALUES ('{song}','{playlist}')
+        """
         self.cursor.execute(sql_query)
         self.connection.commit()
 
