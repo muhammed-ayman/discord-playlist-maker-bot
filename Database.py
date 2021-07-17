@@ -24,6 +24,8 @@ class Database:
             return False
     # CREATE PLAYLIST WITH {playlist} NAME
     def insert_playlist(self,playlist):
+        if self.check_playlist(playlist):
+            return
         sql_query = f"INSERT INTO playlists (playlist) VALUES ('{playlist}')"
         self.cursor.execute(sql_query)
         self.connection.commit()
@@ -36,5 +38,3 @@ class Database:
         """
         self.cursor.execute(sql_query)
         self.connection.commit()
-
-db = Database()
