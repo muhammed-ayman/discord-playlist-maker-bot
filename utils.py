@@ -2,7 +2,7 @@ import re
 from Database import *
 
 class Utils:
-    def __init__(self, db_conn):
+    def __init__(self, db_conn=Database()):
         self.commands_patterns = {
             '^\$create\s[a-zA-Z0-9_.\- ]+$': 'create_playlist',
             '^\$add\s-p\s[a-zA-Z0-9_.\- ]+\s-s\s[a-zA-Z0-9_.\- ]+\s-l\s((http|https)://)'
